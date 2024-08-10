@@ -5,6 +5,7 @@
 // Check for circular includes
 // Performance optimizations. A lot of them. Specifically adding move constructors.
 // Add argc checks and get file name from argv.
+// Create an error message function aside from the logger that takes in col and line as arguments, stringifies them and prints out a message for the user to see.
 
 //Possible changes:
 // The util name is kind of misleading for now. Might change it later.
