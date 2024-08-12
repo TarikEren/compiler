@@ -51,6 +51,7 @@ typedef enum TokenTypes{
     T_SEMI,         //;
     T_PIPE,         //|
     T_QUOT,         //"
+    T_SINGLEQUOT,   //'
     T_HASH,         //#
     T_BACKSLASH,    /*\*/
     T_EOF,          //End of file
@@ -103,6 +104,9 @@ public:
 
     //Sets the token's value.
     void set_token_value(const std::string&);
+
+    //Sets the token's position.
+    void set_token_pos(size_t, size_t);
 
     //Gets the token's type.
     TokenType get_token_type();
