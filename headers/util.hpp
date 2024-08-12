@@ -23,8 +23,8 @@ namespace util {
     constexpr char WARNING_SEQUENCE[19] = "\x1b[33mWarning:\x1b[0m ";
     constexpr char ERROR_SEQUENCE[17] = "\x1b[31mError:\x1b[0m ";
 
-    //Keywords
-    constexpr int KEYWORD_COUNT = 13;
+    //Keywords. A lot C like I know.
+    constexpr int KEYWORD_COUNT = 14;
     constexpr const char* keywords[KEYWORD_COUNT] = {"int",
                                                      "char",
                                                      "string",
@@ -36,6 +36,7 @@ namespace util {
                                                      "while",
                                                      "break",
                                                      "return",
+                                                     "function",
                                                      "true",
                                                      "false"};
 
