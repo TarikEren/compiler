@@ -21,6 +21,7 @@ typedef enum TokenTypes{
     KT_DO,          //do
     KT_WHILE,       //while
     KT_BREAK,       //break
+    KT_FUNCTION,    //function
 
     //Values
     VT_INT,         //Integer values
@@ -97,6 +98,9 @@ public:
 
     //Sets the token's value.
     void set_token_value(const std::string&);
+
+    //Gets the token's type.
+    TokenType get_token_type();
 
     //Presents the token's properties as a string.
     static std::string token_to_string(Token*);

@@ -21,6 +21,9 @@ std::string Token::token_to_string(Token* token) {
         case KT_RETURN:
             new_type = "KT_RETURN";
             break;
+        case KT_FUNCTION:
+            new_type = "KT_FUNCTION";
+            break;
         case KT_IF:
             new_type = "KT_IF";
             break;
@@ -170,4 +173,8 @@ void Token::set_token_type(TokenType new_type) {
 
 void Token::set_token_value(const std::string &new_value) {
     this->value = new_value;
+}
+
+TokenType Token::get_token_type() {
+    return this->type;
 }
