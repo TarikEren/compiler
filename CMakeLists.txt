@@ -8,8 +8,6 @@ add_executable(compiler main.cpp
         headers/token.hpp
         headers/lexer.hpp
         headers/util.hpp
-        headers/parser.hpp
         source/lexer.cpp
-        source/parser.cpp
         source/token.cpp
         source/util.cpp)
