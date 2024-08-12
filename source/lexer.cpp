@@ -54,13 +54,47 @@ std::vector<Token*> Lexer::tokenize() {
     std::string buffer{};
     while (this->current != '\0') {
         if (Lexer::is_whitespace(this->current)) {
+            if (this->current == ' ') col += 1;
+            else if (this->current == '\n') {
+                line += 1;
+                col = 1;
+            }
+            else if (this->current == '\t') line += 4; //Assuming that a tab is 4 chars long.
             this->advance();
         }
-        if (this->current == '\n') {
-            line += 1;
-            col = 1;
-        }
         switch (this->current) {
+            case '\'':
+            {
+                if (isalnum(this->peek())) {
+                    size_t str_col = col, str_line = line;
+                    if (this->peek() != '\'') {
+                        this->advance();
+                        col += 1;
+                        buffer.push_back(current);
+                        if (this->peek() != '\'') {
+                            std::string message = "Unterminated char starts at line: " + std::to_string(str_line);
+                            message += " col: " + std::to_string(str_col);
+                            util::log(util::ERROR, message);
+                        }
+                        else {
+                            auto char_token = new Token(VT_CHAR, buffer, str_line, str_col);
+                            tokens.push_back(char_token);
+                            this->advance();
+                            buffer.clear();
+                        }
+                    }
+                }
+                else if (this->peek() == '\'') {
+                    auto char_token = new Token(VT_CHAR, "", line, col);
+                    tokens.push_back(char_token);
+                    this->advance();
+                }
+                else {
+                    auto token = new Token(T_SINGLEQUOT, '\'', line, col);;
+                    tokens.push_back(token);
+                }
+            }
+                break;
             case '!':
             {
                 auto token = new Token;
@@ -92,7 +126,6 @@ std::vector<Token*> Lexer::tokenize() {
                 if (isalnum(this->peek())) {
                     bool found_end_quote = false;
                     size_t str_col = col, str_line = line;
-                    //TODO: Check for string literal.
                     while (this->peek() != '"' && current != '\0') {
                         this->advance();
                         if (this->current == '\n') {
@@ -188,6 +221,8 @@ std::vector<Token*> Lexer::tokenize() {
                         this->advance();
                         col += 1;
                     }
+                    line += 1;
+                    col = 1;
                 }
                 else {
                     token->set_token(T_SLASH, '/', line, col);
@@ -336,6 +371,7 @@ std::vector<Token*> Lexer::tokenize() {
                             token->set_token_type(VT_BOOL);
                             if (buffer == "true") token->set_token_value("true");
                             else token->set_token_value("false");
+                            token->set_token_pos(line, col);
                         }
                     }
                     else {
@@ -375,7 +411,7 @@ std::vector<Token*> Lexer::tokenize() {
         this->advance();
         col += 1;
     }
-    auto eof_token = new Token(T_EOF, '\0', line, col);
+    auto eof_token = new Token(T_EOF, '\0', 0 ,0);
     tokens.push_back(eof_token);
     return tokens;
 }

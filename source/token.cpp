@@ -1,4 +1,5 @@
 #include "../headers/token.hpp"
+#include <sstream>
 
 std::string Token::token_to_string(Token* token) {
     std::string new_type{};
@@ -150,11 +151,15 @@ std::string Token::token_to_string(Token* token) {
         case T_COMMENT:
             new_type = "T_COMMENT";
             break;
+        case T_SINGLEQUOT:
+            new_type = "T_SINGLEQUOT";
+            break;
         default:
             new_type = "UNKNOWN";
             break;
     }
-    return "Type: " + new_type + "\t\tValue: " + token->value;
+
+    return "Type: " + new_type + "\t\tValue: " + token->value + "\t\t Line: " + std::to_string(token->line) + "\t\tCol: " + std::to_string(token->col);
 }
 
 void Token::set_token(TokenType new_type, const std::string &new_value, size_t line, size_t col) {
@@ -181,4 +186,9 @@ void Token::set_token_value(const std::string &new_value) {
 
 TokenType Token::get_token_type() {
     return this->type;
+}
+
+void Token::set_token_pos(size_t line, size_t col) {
+    this->line = line;
+    this->col = col;
 }
