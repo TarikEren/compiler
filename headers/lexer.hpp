@@ -31,7 +31,7 @@ public:
     static bool is_keyword(const std::string& word);
 
     //Deletes the tokens
-    void delete_tokens(std::vector<Token*>);
+    static void delete_tokens(std::vector<Token*>);
 };
 
 #endif
