@@ -1,8 +1,9 @@
+#include <iostream>
 #include "headers/lexer.hpp" //Lexer, Token, string, vector, util.hpp
-#include "headers/parser.hpp"
 
 //TODOS:
-// Check for circular includes
+// Implement syntax checks in the lexer.
+// Check for circular includes.
 // Performance optimizations. A lot of them. Specifically adding move constructors.
 // Add argc checks and get file name from argv.
 // Create an error message function aside from the logger that takes in col and line as arguments, stringifies them and prints out a message for the user to see.
@@ -25,15 +26,9 @@ int main() {
     }
     //Grab tokens from the tokenizer.
     std::vector<Token*> tokens = lexer_obj.tokenize();
-    //Initiate parser
-    Parser parser_obj{};
-    //Set parser tokens.
-    parser_obj.set_tokens(tokens);
-    //Parse tokens.
-    parser_obj.parse();
-    //Print tokens.
-    parser_obj.dump_tokens();
-    //Remove tokens as they are heap allocated.
-    parser_obj.clear_tokens();
+    for (auto tok: tokens) {
+        std::cout << Token::token_to_string(tok) << std::endl;
+    }
+    lexer_obj.delete_tokens(tokens);
     return util::SUCCESS;
 }
