@@ -65,11 +65,11 @@ std::vector<Token*> Lexer::tokenize() {
             {
                 auto token = new Token;
                 if (this->peek() == '=') {
-                    token->set_token(T_IS_NOT, "!=");
+                    token->set_token(T_IS_NOT, "!=", line, col);
                     this->advance();
                 }
                 else {
-                    token->set_token(T_BANG, '!');
+                    token->set_token(T_BANG, '!', line, col);
                 }
                 tokens.push_back(token);
             }
@@ -78,11 +78,11 @@ std::vector<Token*> Lexer::tokenize() {
             {
                 auto token = new Token;
                 if (this->peek() == '=') {
-                    token->set_token(T_IS, "==");
+                    token->set_token(T_IS, "==", line, col);
                     this->advance();
                 }
                 else {
-                    token->set_token(T_EQUAL, '=');
+                    token->set_token(T_EQUAL, '=', line, col);
                 }
                 tokens.push_back(token);
             }
@@ -115,14 +115,14 @@ std::vector<Token*> Lexer::tokenize() {
                         util::log(util::ERROR, message);
                     } else {
                         auto str_token = new Token;
-                        str_token->set_token(VT_STRING, buffer);
+                        str_token->set_token(VT_STRING, buffer, line, col);
                         tokens.push_back(str_token);
                         buffer.clear();
                     }
                 }
                 else {
                     auto token = new Token;
-                    token->set_token(T_QUOT, '"');
+                    token->set_token(T_QUOT, '"', line, col);
                     tokens.push_back(token);
                 }
             }
@@ -131,11 +131,11 @@ std::vector<Token*> Lexer::tokenize() {
             {
                 auto token = new Token;
                 if (this->peek() == '=') {
-                    token->set_token(T_LESS_EQ, "<=");
+                    token->set_token(T_LESS_EQ, "<=", line, col);
                     this->advance();
                 }
                 else {
-                    token->set_token(T_L_ANGLE, '<');
+                    token->set_token(T_L_ANGLE, '<', line, col);
                 }
                 tokens.push_back(token);
             }
@@ -144,11 +144,11 @@ std::vector<Token*> Lexer::tokenize() {
             {
                 auto token = new Token;
                 if (this->peek() == '=') {
-                    token->set_token(T_GREATER_EQ, ">=");
+                    token->set_token(T_GREATER_EQ, ">=", line, col);
                     this->advance();
                 }
                 else {
-                    token->set_token(T_R_ANGLE, '>');
+                    token->set_token(T_R_ANGLE, '>', line, col);
                 }
                 tokens.push_back(token);
             }
@@ -157,11 +157,11 @@ std::vector<Token*> Lexer::tokenize() {
             {
                 auto token = new Token;
                 if (this->peek() == '&') {
-                    token->set_token(T_AND, "&&");
+                    token->set_token(T_AND, "&&", line, col);
                     this->advance();
                 }
                 else {
-                    token->set_token(T_AMPER, '&');
+                    token->set_token(T_AMPER, '&', line, col);
                 }
                 tokens.push_back(token);
             }
@@ -170,11 +170,11 @@ std::vector<Token*> Lexer::tokenize() {
             {
                 auto token = new Token;
                 if (this->peek() == '|') {
-                    token->set_token(T_OR, "||");
+                    token->set_token(T_OR, "||", line, col);
                     this->advance();
                 }
                 else {
-                    token->set_token(T_PIPE, '|');
+                    token->set_token(T_PIPE, '|', line, col);
                 }
                 tokens.push_back(token);
             }
@@ -183,48 +183,51 @@ std::vector<Token*> Lexer::tokenize() {
             {
                 auto token = new Token;
                 if (this->peek() == '/') {
-                    token->set_token(T_COMMENT, "//");
-                    this->advance();
+                    token->set_token(T_COMMENT, "//", line, col);
+                    while (this->current != '\n') {
+                        this->advance();
+                        col += 1;
+                    }
                 }
                 else {
-                    token->set_token(T_SLASH, '/');
+                    token->set_token(T_SLASH, '/', line, col);
                 }
                 tokens.push_back(token);
             }
                 break;
             case '(':
             {
-                auto* token = new Token(T_L_PAR, '(');
+                auto* token = new Token(T_L_PAR, '(', line, col);
                 tokens.push_back(token);
             }
                 break;
             case ')':
             {
-                auto token = new Token(T_R_PAR, ')');
+                auto token = new Token(T_R_PAR, ')', line, col);
                 tokens.push_back(token);
             }
                 break;
             case '{':
             {
-                auto token = new Token(T_L_BRACE, '{');
+                auto token = new Token(T_L_BRACE, '{', line, col);
                 tokens.push_back(token);
             }
                 break;
             case '}':
             {
-                auto token = new Token(T_R_BRACE, '}');
+                auto token = new Token(T_R_BRACE, '}', line, col);
                 tokens.push_back(token);
             }
                 break;
             case '[':
             {
-                auto token = new Token(T_L_BRACKET, '[');
+                auto token = new Token(T_L_BRACKET, '[', line, col);
                 tokens.push_back(token);
             }
                 break;
             case ']':
             {
-                auto token = new Token(T_R_BRACKET, ']');
+                auto token = new Token(T_R_BRACKET, ']', line, col);
                 tokens.push_back(token);
             }
                 break;
@@ -232,11 +235,11 @@ std::vector<Token*> Lexer::tokenize() {
             {
                 auto token = new Token;
                 if (this->peek() == '=') {
-                    token->set_token(T_INCR, "+=");
+                    token->set_token(T_INCR, "+=", line, col);
                     this->advance();
                 }
                 else {
-                    token->set_token(T_PLUS, '+');
+                    token->set_token(T_PLUS, '+', line, col);
                 }
                 tokens.push_back(token);
             }
@@ -245,42 +248,42 @@ std::vector<Token*> Lexer::tokenize() {
             {
                 auto token = new Token;
                 if (this->peek() == '=') {
-                    token->set_token(T_DECR, "-=");
+                    token->set_token(T_DECR, "-=", line, col);
                     this->advance();
                 }
                 else {
-                    token->set_token(T_MINUS, '-');
+                    token->set_token(T_MINUS, '-', line, col);
                 }
                 tokens.push_back(token);
             }
                 break;
             case '*':
             {
-                auto token = new Token(T_STAR, '*');
+                auto token = new Token(T_STAR, '*', line, col);
                 tokens.push_back(token);
             }
                 break;
             case ':':
             {
-                auto token = new Token(T_COLON, ':');
+                auto token = new Token(T_COLON, ':', line, col);
                 tokens.push_back(token);
             }
                 break;
             case ';':
             {
-                auto token = new Token(T_SEMI, ';');
+                auto token = new Token(T_SEMI, ';', line, col);
                 tokens.push_back(token);
             }
                 break;
             case '%':
             {
-                auto token = new Token(T_MODULO, '%');
+                auto token = new Token(T_MODULO, '%', line, col);
                 tokens.push_back(token);
             }
                 break;
             case '#':
             {
-                auto token = new Token(T_HASH, '#');
+                auto token = new Token(T_HASH, '#', line, col);
                 tokens.push_back(token);
             }
                 break;
@@ -294,40 +297,40 @@ std::vector<Token*> Lexer::tokenize() {
                     auto token = new Token;
                     if (Lexer::is_keyword(buffer)) {
                         if (buffer == "bool") {
-                            token->set_token(KT_BOOL, "bool");
+                            token->set_token(KT_BOOL, "bool", line, col);
                         }
                         else if (buffer == "int") {
-                            token->set_token(KT_INT, "int");
+                            token->set_token(KT_INT, "int", line, col);
                         }
                         else if (buffer == "char") {
-                            token->set_token(KT_CHAR, "char");
+                            token->set_token(KT_CHAR, "char", line, col);
                         }
                         else if (buffer == "string") {
-                            token->set_token(KT_STRING, "string");
+                            token->set_token(KT_STRING, "string", line, col);
                         }
                         else if (buffer == "for") {
-                            token->set_token(KT_FOR, "for");
+                            token->set_token(KT_FOR, "for", line, col);
                         }
                         else if (buffer == "do") {
-                            token->set_token(KT_DO, "do");
+                            token->set_token(KT_DO, "do", line, col);
                         }
                         else if (buffer == "while") {
-                            token->set_token(KT_WHILE, "while");
+                            token->set_token(KT_WHILE, "while", line, col);
                         }
                         else if (buffer == "break") {
-                            token->set_token(KT_BREAK, "break");
+                            token->set_token(KT_BREAK, "break", line, col);
                         }
                         else if (buffer == "if") {
-                            token->set_token(KT_IF, "if");
+                            token->set_token(KT_IF, "if", line, col);
                         }
                         else if (buffer == "else") {
-                            token->set_token(KT_ELSE, "else");
+                            token->set_token(KT_ELSE, "else", line, col);
                         }
                         else if (buffer == "return") {
-                            token->set_token(KT_RETURN, "return");
+                            token->set_token(KT_RETURN, "return", line, col);
                         }
                         else if (buffer == "function") {
-                            token->set_token(KT_FUNCTION, "function");
+                            token->set_token(KT_FUNCTION, "function", line, col);
                         }
                         else if (buffer == "true" || buffer == "false") {
                             token->set_token_type(VT_BOOL);
@@ -336,7 +339,7 @@ std::vector<Token*> Lexer::tokenize() {
                         }
                     }
                     else {
-                        token->set_token(VT_IDENT, buffer);
+                        token->set_token(VT_IDENT, buffer, line, col);
                     }
                     tokens.push_back(token);
                     buffer.clear();
@@ -346,7 +349,7 @@ std::vector<Token*> Lexer::tokenize() {
                         buffer.push_back(this->current);
                         this->advance();
                     }
-                    auto token = new Token(VT_INT, buffer);
+                    auto token = new Token(VT_INT, buffer, line, col);
                     tokens.push_back(token);
                     buffer.clear();
                 }
@@ -372,7 +375,7 @@ std::vector<Token*> Lexer::tokenize() {
         this->advance();
         col += 1;
     }
-    auto eof_token = new Token(T_EOF, '\0');
+    auto eof_token = new Token(T_EOF, '\0', line, col);
     tokens.push_back(eof_token);
     return tokens;
 }

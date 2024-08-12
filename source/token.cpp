@@ -157,14 +157,18 @@ std::string Token::token_to_string(Token* token) {
     return "Type: " + new_type + "\t\tValue: " + token->value;
 }
 
-void Token::set_token(TokenType new_type, const std::string &new_value) {
+void Token::set_token(TokenType new_type, const std::string &new_value, size_t line, size_t col) {
     this->value = new_value;
     this->type = new_type;
+    this->line = line;
+    this->col = col;
 }
 
-void Token::set_token(TokenType new_type, char new_value) {
+void Token::set_token(TokenType new_type, char new_value, size_t line, size_t col) {
     this->value = new_value;
     this->type = new_type;
+    this->line = line;
+    this->col = col;
 }
 
 void Token::set_token_type(TokenType new_type) {

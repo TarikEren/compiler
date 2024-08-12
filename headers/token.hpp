@@ -72,26 +72,31 @@ class Token {
 private:
     TokenType type{};
     std::string value{};
+    size_t line{}, col{};
 public:
     //Default constructor
     explicit Token() = default;
 
     //Constructor
-    Token(TokenType new_type, const std::string& new_value) {
+    Token(TokenType new_type, const std::string& new_value, size_t line, size_t col) {
         this->type = new_type;
         this->value = new_value;
+        this->line = line;
+        this->col = col;
     }
 
-    Token(TokenType new_type, char new_value) {
+    Token(TokenType new_type, char new_value, size_t line, size_t col) {
         this->type = new_type;
         this->value = new_value;
+        this->line = line;
+        this->col = col;
     }
 
     //Sets a provided token's type and value. Used for tokens with multiple characters.
-    void set_token(TokenType, const std::string&);
+    void set_token(TokenType, const std::string&, size_t, size_t);
 
     //Sets the token's type and value. Used for singular character tokens.
-    void set_token(TokenType, char);
+    void set_token(TokenType, char, size_t, size_t);
 
     //Sets the token's type.
     void set_token_type(TokenType);
