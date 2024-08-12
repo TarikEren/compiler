@@ -1,4 +1,3 @@
-#include <iostream>
 #include <fstream>
 #include <sstream>
 #include "../headers/lexer.hpp"
@@ -327,6 +326,9 @@ std::vector<Token*> Lexer::tokenize() {
                         else if (buffer == "return") {
                             token->set_token(KT_RETURN, "return");
                         }
+                        else if (buffer == "function") {
+                            token->set_token(KT_FUNCTION, "function");
+                        }
                         else if (buffer == "true" || buffer == "false") {
                             token->set_token_type(VT_BOOL);
                             if (buffer == "true") token->set_token_value("true");
@@ -373,4 +375,10 @@ std::vector<Token*> Lexer::tokenize() {
     auto eof_token = new Token(T_EOF, '\0');
     tokens.push_back(eof_token);
     return tokens;
+}
+
+void Lexer::delete_tokens(std::vector<Token*> tokens) {
+    for (auto tok: tokens) {
+        delete tok;
+    }
 }

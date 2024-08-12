@@ -29,6 +29,9 @@ public:
 
     //Checks if the provided string is a keyword or not.
     static bool is_keyword(const std::string& word);
+
+    //Deletes the tokens
+    void delete_tokens(std::vector<Token*>);
 };
 
 #endif
