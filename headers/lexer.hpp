@@ -18,20 +18,20 @@ public:
     //Move forward one character.
     void advance();
 
+    //Steps back one character.
+    void step_back();
+
     //Show tne next character.
     char peek();
 
     //Iterate through the text variable and tokenize.
     std::vector<Token*> tokenize();
 
-    //Checks if the current character is whitespace or not.
-    static bool is_whitespace(char ch);
-
     //Checks if the provided string is a keyword or not.
-    static bool is_keyword(const std::string& word);
+    static bool is_keyword(const std::string&);
 
     //Deletes the tokens
-    static void delete_tokens(std::vector<Token*>);
+    static void delete_tokens(const std::vector<Token*>&);
 };
 
 #endif
