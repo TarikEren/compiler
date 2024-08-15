@@ -2,6 +2,7 @@
 #define COMPILER_UTIL_HPP
 
 #include <string>
+#include "ast_node.hpp"
 
 namespace util {
 
@@ -9,6 +10,7 @@ namespace util {
     typedef enum ExitCodes {
         SUCCESS,
         FILE_NOT_FOUND,
+        FILE_NOT_PROVIDED
     }Exitcode;
 
     typedef enum LogLevels {
@@ -41,6 +43,21 @@ namespace util {
                                                      "false"};
 
     void log(Loglevel, const std::string&);
+
+    class NodeStack {
+    private:
+        AST_Node** array{};
+        size_t top{};
+    public:
+        NodeStack() {
+            this->top = -1;
+            this->array = (AST_Node**)calloc(this->top + 1, sizeof(AST_Node*));
+        }
+        void push(AST_Node* new_node);
+        AST_Node* pop();
+        AST_Node* peek();
+        bool is_empty() const;
+    };
 }
 
 #endif
