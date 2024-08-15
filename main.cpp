@@ -2,22 +2,13 @@
 #include "headers/lexer.hpp" //Lexer, Token, string, vector, util.hpp
 
 //TODOS:
-// TODO: Check the line and col values.
 // TODO: Implement syntax checks in the lexer.
-// TODO: Implement single quotes.
-// TODO: Fix line and column counters.
-// TODO: Recognise underscores.
 // TODO: Check for circular includes.
 // TODO: Performance optimizations. A lot of them. Specifically adding move constructors.
-// TODO: Add argc checks and get file name from argv.
-// TODO: Create an error message function aside from the logger that takes in col and line as arguments, stringifies them and prints out a message for the user to see.
-
-//Possible changes:
-// The util name is kind of misleading for now. Might change it later.
 
 //Errors and issues:
-// If there isn't a space between an integer literal and a string literal, the program goes ape shit.
 // There aren't any number checks in identifiers.
+// (Try implementing a while loop that iterates through the text until it encounters a semicolon or space and checking if there are any numbers in the buffer.)
 
 int main(int argc, char* argv[]) {
     if (argc < 2) {
