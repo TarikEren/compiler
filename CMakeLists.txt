@@ -10,4 +10,6 @@ add_executable(compiler main.cpp
         headers/util.hpp
         source/lexer.cpp
         source/token.cpp
-        source/util.cpp)
+        source/util.cpp
+        headers/ast_node.hpp
+        headers/ast.hpp)
