@@ -33,6 +33,7 @@ AST_Node *util::NodeStack::pop() {
         return nullptr;
     }
     this->top -= 1;
+    return this->array[this->top];
 }
 
 AST_Node *util::NodeStack::peek() {
