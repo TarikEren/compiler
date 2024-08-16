@@ -12,4 +12,5 @@ add_executable(compiler main.cpp
         source/token.cpp
         source/util.cpp
         headers/ast_node.hpp
-        headers/ast.hpp)
+        headers/ast.hpp
+        source/ast.cpp)
