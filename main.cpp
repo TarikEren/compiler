@@ -1,18 +1,17 @@
 #include <iostream>
 #include "headers/lexer.hpp" //Lexer, Token, string, vector, util.hpp
+#include "headers/ast.hpp"
 
 //TODOS:
 // TODO: Implement syntax checks in the lexer.
 // TODO: Check for circular includes.
 // TODO: Performance optimizations. A lot of them. Specifically adding move constructors.
-
-//Errors and issues:
-// There aren't any number checks in identifiers.
-// (Try implementing a while loop that iterates through the text until it encounters a semicolon or space and checking if there are any numbers in the buffer.)
+// TODO: Find a compiler and language name. Also an extension.
 
 int main(int argc, char* argv[]) {
     if (argc < 2) {
-        util::log(util::ERROR, "No file provided");
+        util::log(util::INFO, R"(Usage: COMPILER_NAME "file name" "flags")");
+        //TODO: Figure out some flags.
         return util::FILE_NOT_PROVIDED;
     }
     //Initiate lexer
@@ -28,7 +27,8 @@ int main(int argc, char* argv[]) {
     for (auto tok: tokens) {
         std::cout << Token::token_to_string(tok) << std::endl;
     }
-    //TODO: Change this so that the parser takes in the tokens and deletes them as well.
-    Lexer::delete_tokens(tokens);
+    AST ast{};
+    ast.set_tokens(tokens);
+    ast.delete_tokens();
     return util::SUCCESS;
 }
