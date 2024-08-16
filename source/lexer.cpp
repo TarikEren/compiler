@@ -52,7 +52,7 @@ std::vector<Token *> Lexer::tokenize() {
     size_t line = 1, col = 0;
     std::string buffer{};
 
-    while (this->current != '\0') {
+        while (this->current != '\0') {
         Token* token;
         switch (this->current) {
             case '=':
@@ -329,7 +329,7 @@ std::vector<Token *> Lexer::tokenize() {
                 break;
             default:
                 if (isalpha(this->current)) {
-                    while (isalpha(this->current) || current == '_') {
+                    while (isalnum(this->current) || current == '_') {
                         buffer.push_back(this->current);
                         this->advance();
                         col += 1;
